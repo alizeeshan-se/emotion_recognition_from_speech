@@ -1,0 +1,7 @@
+streamlit==1.45.1
+numpy==1.24.4
+librosa==0.10.1
+scipy==1.11.1
+sounddevice==0.5.2
+Pillow==11.2.1
+keras==3.9.2
