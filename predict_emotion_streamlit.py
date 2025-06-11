@@ -84,40 +84,4 @@ if uploaded_file is not None:
         st.error("Error processing the uploaded audio.")
         st.error(str(e))
 
-# --- Mic Recording Option ---
-# Styled horizontal line (divider)
-st.markdown("<hr style='border: 1px solid #ccc;'>", unsafe_allow_html=True)
-
-# Styled heading
-st.markdown("""
-    <h3 style='color:#1a75ff; font-family:Verdana;'>
-        🔴 Or Record Your Voice
-    </h3>
-""", unsafe_allow_html=True)
-
-# Slider label styling
-st.markdown("""
-    <p style='font-size:16px; font-family:Verdana;'>
-        ⏱️ <strong>Select Recording Duration (seconds)</strong>
-    </p>
-""", unsafe_allow_html=True)
-
-duration = st.slider("Recording Duration (seconds)", min_value=1, max_value=10, value=3)
-
-if st.button("🎤 Start Recording"):
-    st.info("Recording... Speak Now!")
-    fs = 44100  # Sample rate
-    recording = sd.rec(int(duration * fs), samplerate=fs, channels=1)
-    sd.wait()
-    
-    # Save recording to temp file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmpfile:
-        wav.write(tmpfile.name, fs, recording)
-        st.audio(tmpfile.name, format="audio/wav")
         
-        try:
-            prediction = predict_emotion(tmpfile.name)
-            st.success(f"🎯 Predicted Emotion: **{prediction.upper()}**")
-        except Exception as e:
-            st.error("Error processing the recorded audio.")
-            st.error(str(e))
